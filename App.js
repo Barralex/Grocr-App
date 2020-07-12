@@ -1,28 +1,15 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import SignIn from "./app/components/authenticate/sign-in/sign-in";
-import SignUp from "./app/components/authenticate/sign-up/sign-up";
-import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import store from "./app/store/store";
+import { Provider } from "react-redux";
+import Selector from "./app/components/main/selector";
 
 export default function App() {
   const Stack = createStackNavigator();
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="SignIn"
-          component={SignIn}
-          options={{ title: "Sign In" }}
-        />
-        <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{ title: "Sign Up" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <Selector />
+    </Provider>
   );
 }

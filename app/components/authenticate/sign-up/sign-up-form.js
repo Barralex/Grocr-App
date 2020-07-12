@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet, Button, TextInput } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import { Field, reduxForm } from "redux-form";
 
 const styles = StyleSheet.create({
@@ -18,6 +18,14 @@ const styles = StyleSheet.create({
 const validate = (values) => {
   const errors = {};
 
+  if (!values.name) {
+    errors.name = "required";
+  } else if (values.name.length < 5) {
+    errors.name = "name length should be more than 5";
+  } else if (values.name.length > 20) {
+    errors.name = "name length should be less than 20";
+  }
+
   if (!values.email) {
     errors.email = "required";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -30,6 +38,12 @@ const validate = (values) => {
     errors.password = "password length should be more than 5";
   } else if (values.password.length > 15) {
     errors.password = "password length should be less than 15";
+  }
+
+  if (!values.confirmPassword) {
+    errors.confirmPassword = "required";
+  } else if (values.password !== values.confirmPassword) {
+    errors.confirmPassword = "password must be the same";
   }
 
   return errors;
@@ -55,18 +69,24 @@ const fieldName = ({ input, placeholder, meta: { error, touched } }) => {
   );
 };
 
-const SignInForm = (props) => {
+const SignUpForm = (props) => {
   return (
-    <View>
+    <View style={styles.container}>
+      <Field name="name" component={fieldName} placeholder="Name" />
       <Field
         name="email"
         component={fieldName}
-        placeholder="email@domain.com"
+        placeholder="Email@domain.com"
       />
-      <Field name="password" component={fieldName} placeholder="password" />
-      <Button title="Sign In" onPress={props.handleSubmit(props.signIn)} />
+      <Field name="password" component={fieldName} placeholder="Password" />
+      <Field
+        name="confirmPassword"
+        component={fieldName}
+        placeholder="Confirm password"
+      />
+      <Button title="Register" onPress={props.handleSubmit(props.register)} />
     </View>
   );
 };
 
-export default reduxForm({ form: "SignInForm", validate })(SignInForm);
+export default reduxForm({ form: "SignUpForm", validate })(SignUpForm);

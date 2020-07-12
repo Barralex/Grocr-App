@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
+import SignInForm from "./sign-in-form";
+import { actionLogin } from "../../../store/ACTIONS";
+import { connect } from "react-redux";
 
 const styles = StyleSheet.create({
   container: {
@@ -8,20 +11,38 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 16,
   },
+  signInForm: {
+    marginTop: 8,
+  },
 });
 
-export default class SignIn extends Component {
+const mapStateToProps = (state) => ({
+  prop: state.prop,
+});
+
+const mapDispachToPros = (dispatch) => ({
+  login: (values) => {
+    dispatch(actionLogin(values));
+  },
+});
+
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+
+  signInUser = (values) => {
+    this.props.login(values);
+  };
 
   render() {
     const { navigation } = this.props;
 
     return (
       <View style={styles.container}>
-        <Text> sign-in </Text>
+        <SignInForm signIn={this.signInUser} />
+        <View style={styles.signInForm} />
         <Button
           title="Go to Sign Up"
           onPress={() => navigation.navigate("SignUp")}
@@ -30,3 +51,5 @@ export default class SignIn extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispachToPros)(SignIn);
