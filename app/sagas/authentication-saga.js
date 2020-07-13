@@ -40,7 +40,17 @@ function* sagaLogin(values) {
   }
 }
 
-export default function* authFunction() {
+function* sagaLogout() {
+  try {
+    yield call(authentication.signOut());
+    console.log("sign out success");
+  } catch {
+    console.log("sign out failed");
+  }
+}
+
+export default function* authenticationsFunctions() {
   yield takeEvery(CONSTANTS.REGISTER, sagaRegister);
   yield takeEvery(CONSTANTS.LOGIN, sagaLogin);
+  yield takeEvery(CONSTANTS.LOGOUT, sagaLogout);
 }

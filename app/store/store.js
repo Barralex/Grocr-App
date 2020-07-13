@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import CONSTANTS from "./CONSTANTS";
 import { reducer as form } from "redux-form";
-import authFunction from "../sagas/authentication-saga";
+import authenticationsFunctions from "../sagas/authentication-saga";
 import createSagaMiddleware from "redux-saga";
 
 const reducerSession = (state = null, action) => {
@@ -26,6 +26,6 @@ const reducers = combineReducers({
 
 const store = createStore(reducers, applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(authFunction);
+sagaMiddleware.run(authenticationsFunctions);
 
 export default store;

@@ -5,7 +5,6 @@ import Main from "./main";
 import { authentication } from "./../../services/firebase";
 import { actionSetSession, actionCloseSession } from "./../../store/ACTIONS";
 import { connect } from "react-redux";
-import authFunction from "../../sagas/authentication-saga";
 
 const styles = StyleSheet.create({
   container: {

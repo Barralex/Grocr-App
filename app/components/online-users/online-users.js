@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class GroceryList extends Component {
+export default class OnlineUsers extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -19,7 +19,7 @@ export default class GroceryList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> grocery-list </Text>
+        <Text> online-users </Text>
       </View>
     );
   }

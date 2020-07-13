@@ -2,8 +2,16 @@ import React, { Component } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import GroceryList from "./../grocery-list/grocery-list";
+import {
+  OnlineUsersButton,
+  AddNewItemButton,
+  SignOutButton,
+} from "./headers-buttons";
+import OnlineUsers from "../online-users/online-users";
+import { actionLogout } from "../../store/ACTIONS";
+import { connect } from "react-redux";
 
-export default class Main extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -15,9 +23,39 @@ export default class Main extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="GroceryList" component={GroceryList} />
+          <Stack.Screen
+            name="GroceryList"
+            component={GroceryList}
+            options={({ navigation }) => ({
+              title: "Grocery List",
+              headerTitleAlign: "center",
+              headerLeft: OnlineUsersButton(navigation),
+              headerRight: AddNewItemButton(),
+            })}
+          />
+          <Stack.Screen
+            name="OnlineUsers"
+            component={OnlineUsers}
+            options={{
+              title: "Online Users",
+              headerTitleAlign: "center",
+              headerRight: SignOutButton(this.props.logout),
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  prop: state.prop,
+});
+
+const mapDispachToPros = (dispatch) => ({
+  logout: () => {
+    dispatch(actionLogout());
+  },
+});
+
+export default connect(mapStateToProps, mapDispachToPros)(Main);
