@@ -1,10 +1,19 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export const OnlineUsersButton = (navigation) => {
+export const OnlineUsersButton = (navigation, usersNumber) => {
+  const styles = StyleSheet.create({
+    userNumbers: {
+      fontSize: 20,
+      marginLeft: 8,
+    },
+  });
+
   return () => (
-    <Text onPress={() => navigation.navigate("OnlineUsers")}> 1 </Text>
+    <TouchableOpacity onPress={() => navigation.navigate("OnlineUsers")}>
+      <Text style={styles.userNumbers}>{usersNumber}</Text>
+    </TouchableOpacity>
   );
 };
 

@@ -29,7 +29,7 @@ class Main extends Component {
             options={({ navigation }) => ({
               title: "Grocery List",
               headerTitleAlign: "center",
-              headerLeft: OnlineUsersButton(navigation),
+              headerLeft: OnlineUsersButton(navigation, 1),
               headerRight: AddNewItemButton(),
             })}
           />
@@ -37,7 +37,7 @@ class Main extends Component {
             name="OnlineUsers"
             component={OnlineUsers}
             options={{
-              title: "Online Users",
+              title: "Online",
               headerTitleAlign: "center",
               headerRight: SignOutButton(this.props.logout),
             }}
