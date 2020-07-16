@@ -20,10 +20,8 @@ const mapDispachToPros = (dispatch) => ({
   authentication: () => {
     authentication.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         dispatch(actionSetSession(user));
       } else {
-        console.log("No session");
         dispatch(actionCloseSession());
       }
     });

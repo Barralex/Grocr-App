@@ -17,9 +17,9 @@ export const OnlineUsersButton = (navigation, usersNumber) => {
   );
 };
 
-export const AddNewItemButton = (navigation) => {
+export const AddNewItemButton = (setItem, values) => {
   return () => (
-    <TouchableOpacity onPress={() => alert("This is a button")}>
+    <TouchableOpacity onPress={() => setItem(values)}>
       <Ionicons name="ios-add-circle-outline" size={32} color="black" />
     </TouchableOpacity>
   );

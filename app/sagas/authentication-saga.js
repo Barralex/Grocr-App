@@ -13,7 +13,7 @@ const userDatabasaRegister = ({ uid, email, name }) =>
     email,
   });
 
-function* sagaRegister(values) {
+function* userRegisterHandler(values) {
   try {
     const register = yield call(firebaseRegister, values.data);
     const { email, uid } = register.user;
@@ -31,7 +31,7 @@ const firebaseLogin = ({ email, password }) =>
     .signInWithEmailAndPassword(email, password)
     .then((success) => success);
 
-function* sagaLogin(values) {
+function* userLoginHandler(values) {
   try {
     const result = yield call(firebaseLogin, values.data);
     console.log("sign in success:", result);
@@ -40,7 +40,7 @@ function* sagaLogin(values) {
   }
 }
 
-function* sagaLogout() {
+function* userLogoutHandler() {
   try {
     yield call(authentication.signOut());
     console.log("sign out success");
@@ -49,8 +49,16 @@ function* sagaLogout() {
   }
 }
 
-export default function* authenticationsFunctions() {
-  yield takeEvery(CONSTANTS.REGISTER, sagaRegister);
-  yield takeEvery(CONSTANTS.LOGIN, sagaLogin);
-  yield takeEvery(CONSTANTS.LOGOUT, sagaLogout);
+function* userLogoutWatcher() {
+  yield takeEvery(CONSTANTS.LOGOUT, userLogoutHandler);
 }
+
+function* userRegisterWatcher() {
+  yield takeEvery(CONSTANTS.REGISTER, userRegisterHandler);
+}
+
+function* userLoginWatcher() {
+  yield takeEvery(CONSTANTS.LOGIN, userLoginHandler);
+}
+
+export default [userRegisterWatcher, userLoginWatcher, userLogoutWatcher];

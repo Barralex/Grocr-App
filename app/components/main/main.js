@@ -8,7 +8,7 @@ import {
   SignOutButton,
 } from "./headers-buttons";
 import OnlineUsers from "../online-users/online-users";
-import { actionLogout } from "../../store/ACTIONS";
+import { actionLogout, actionSetItem } from "../../store/ACTIONS";
 import { connect } from "react-redux";
 
 class Main extends Component {
@@ -30,7 +30,11 @@ class Main extends Component {
               title: "Grocery List",
               headerTitleAlign: "center",
               headerLeft: OnlineUsersButton(navigation, 1),
-              headerRight: AddNewItemButton(),
+              headerRight: AddNewItemButton(this.props.setItem, {
+                name: "Cheese",
+                addByUser: "reynaldo@gmail.com",
+                done: false,
+              }),
             })}
           />
           <Stack.Screen
@@ -55,6 +59,9 @@ const mapStateToProps = (state) => ({
 const mapDispachToPros = (dispatch) => ({
   logout: () => {
     dispatch(actionLogout());
+  },
+  setItem: (values) => {
+    dispatch(actionSetItem(values));
   },
 });
 

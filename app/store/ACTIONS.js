@@ -10,9 +10,8 @@ export const actionLogin = (values) => ({
   data: values,
 });
 
-export const actionLogout = (values) => ({
+export const actionLogout = () => ({
   type: CONSTANTS.LOGOUT,
-  data: values,
 });
 
 export const actionSetSession = (user) => ({
@@ -22,4 +21,9 @@ export const actionSetSession = (user) => ({
 
 export const actionCloseSession = () => ({
   type: CONSTANTS.CLOSE_SESSION,
+});
+
+export const actionSetItem = (values) => ({
+  type: CONSTANTS.SET_ITEM,
+  data: values,
 });
