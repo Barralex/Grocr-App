@@ -4,12 +4,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import GroceryList from "./../grocery-list/grocery-list";
 import {
   OnlineUsersButton,
-  AddNewItemButton,
+  navigateToAddItem,
   SignOutButton,
 } from "./headers-buttons";
 import OnlineUsers from "../online-users/online-users";
 import { actionLogout, actionSetItem } from "../../store/ACTIONS";
 import { connect } from "react-redux";
+import AddGroceryItem from "./../grocery-list/add-grocery-item";
 
 class Main extends Component {
   constructor(props) {
@@ -30,11 +31,7 @@ class Main extends Component {
               title: "Grocery List",
               headerTitleAlign: "center",
               headerLeft: OnlineUsersButton(navigation, 1),
-              headerRight: AddNewItemButton(this.props.setItem, {
-                name: "Cheese",
-                addByUser: "reynaldo@gmail.com",
-                done: false,
-              }),
+              headerRight: navigateToAddItem(navigation),
             })}
           />
           <Stack.Screen
@@ -46,6 +43,14 @@ class Main extends Component {
               headerRight: SignOutButton(this.props.logout),
             }}
           />
+          <Stack.Screen
+            name="AddGroceryItem"
+            component={AddGroceryItem}
+            options={{
+              title: "Grocery Item",
+              headerTitleAlign: "center",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -53,7 +58,8 @@ class Main extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  prop: state.prop,
+  addItemStatus: state.reducerGroceryItems,
+  user: state.user,
 });
 
 const mapDispachToPros = (dispatch) => ({

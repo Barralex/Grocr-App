@@ -1,5 +1,5 @@
 import { database } from "../services/firebase";
-import { takeEvery, call } from "redux-saga/effects";
+import { takeEvery, call, put, getContext } from "redux-saga/effects";
 import CONSTANTS from "../store/CONSTANTS";
 
 function* setGroceryItemWatcher() {
@@ -12,8 +12,11 @@ const setGroceryItem = (values) => {
 };
 
 function* setGroceryItemHandler(values) {
+  const navigationService = yield getContext("navigation");
   try {
     yield call(setGroceryItem, values.data);
+    console.log("holis", navigationService);
+    navigationService.navigate("GroceryList");
   } catch (error) {
     console.log("setGroceryItemHandler error:", error);
   }

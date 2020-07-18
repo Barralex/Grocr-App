@@ -1,6 +1,7 @@
 import { takeEvery, call } from "redux-saga/effects";
 import { authentication, database } from "../services/firebase";
 import CONSTANTS from "../store/CONSTANTS";
+import { Alert } from "react-native";
 
 const firebaseRegister = (values) =>
   authentication
@@ -36,7 +37,7 @@ function* userLoginHandler(values) {
     const result = yield call(firebaseLogin, values.data);
     console.log("sign in success:", result);
   } catch (error) {
-    console.log("sign in failed:", error);
+    Alert.alert("Login Failed", "Invalid credentials");
   }
 }
 

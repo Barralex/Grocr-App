@@ -17,9 +17,18 @@ export const OnlineUsersButton = (navigation, usersNumber) => {
   );
 };
 
-export const AddNewItemButton = (setItem, values) => {
+export const navigateToAddItem = (navigation) => {
+  const styles = StyleSheet.create({
+    addItemButton: {
+      marginRight: 8,
+    },
+  });
+
   return () => (
-    <TouchableOpacity onPress={() => setItem(values)}>
+    <TouchableOpacity
+      style={styles.addItemButton}
+      onPress={() => navigation.navigate("AddGroceryItem")}
+    >
       <Ionicons name="ios-add-circle-outline" size={32} color="black" />
     </TouchableOpacity>
   );

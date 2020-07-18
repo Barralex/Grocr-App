@@ -1,30 +1,23 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import CONSTANTS from "./CONSTANTS";
 import { reducer as form } from "redux-form";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "../sagas/root-saga";
+import { reducerSession, reducerGroceryItems } from "./reducers";
+import navigationService from "../services/navigationService";
 
-const reducerSession = (state = null, action) => {
-  switch (action.type) {
-    case CONSTANTS.SET_SESSION:
-      return { ...action.user };
-
-    case CONSTANTS.CLOSE_SESSION:
-      return null;
-
-    default:
-      return state;
-  }
-};
-
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware({
+  context: {
+    navigation: navigationService,
+  },
+});
 
 const reducers = combineReducers({
   reducerSession,
   form,
+  reducerGroceryItems,
 });
 
-const store = createStore(reducers, applyMiddleware(sagaMiddleware));
+const store = createStore(reducers, applyMiddleware(...[sagaMiddleware]));
 
 sagaMiddleware.run(rootSaga);
 

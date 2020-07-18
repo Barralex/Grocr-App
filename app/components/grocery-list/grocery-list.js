@@ -1,12 +1,6 @@
-import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  SafeAreaView,
-} from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, FlatList, SafeAreaView } from "react-native";
+import navigationService from "../../services/navigationService";
 
 const styles = StyleSheet.create({
   container: {
@@ -50,21 +44,20 @@ const Item = ({ title, owner }) => (
 
 const renderItem = ({ item }) => <Item title={item.title} owner={item.owner} />;
 
-export default class GroceryList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const GroceryList = ({ navigation }) => {
+  React.useEffect(() => {
+    navigationService.setNavigation(navigation);
+  }, [navigation]);
 
-  render() {
-    return (
-      <SafeAreaView style={styles.container}>
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        ></FlatList>
-      </SafeAreaView>
-    );
-  }
-}
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      ></FlatList>
+    </SafeAreaView>
+  );
+};
+
+export default GroceryList;
