@@ -15,7 +15,6 @@ function* setGroceryItemHandler(values) {
   const navigationService = yield getContext("navigation");
   try {
     yield call(setGroceryItem, values.data);
-    console.log("holis", navigationService);
     navigationService.navigate("GroceryList");
   } catch (error) {
     console.log("setGroceryItemHandler error:", error);
