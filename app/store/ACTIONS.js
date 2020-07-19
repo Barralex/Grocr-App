@@ -27,3 +27,8 @@ export const actionSetItem = (values) => ({
   type: CONSTANTS.SET_ITEM,
   data: values,
 });
+
+export const updateGroceryList = (values) => ({
+  type: CONSTANTS.UPDATE_GROCERY_LIST,
+  data: values,
+});

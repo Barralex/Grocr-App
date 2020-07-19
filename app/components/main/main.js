@@ -58,7 +58,6 @@ class Main extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  addItemStatus: state.reducerGroceryItems,
   user: state.user,
 });
 

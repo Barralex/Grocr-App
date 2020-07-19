@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList, SafeAreaView } from "react-native";
 import navigationService from "../../services/navigationService";
+import { useSelector } from "react-redux";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,16 +36,18 @@ const DATA = [
   },
 ];
 
-const Item = ({ title, owner }) => (
+const Item = ({ name, owner }) => (
   <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
+    <Text style={styles.title}>{name}</Text>
     <Text style={styles.title}>{owner}</Text>
   </View>
 );
 
-const renderItem = ({ item }) => <Item title={item.title} owner={item.owner} />;
+const renderItem = ({ item }) => <Item name={item.name} owner={item.owner} />;
 
 const GroceryList = ({ navigation }) => {
+  const groceryItems = useSelector((state) => state.reducerGroceryItems);
+  console.log(groceryItems);
   React.useEffect(() => {
     navigationService.setNavigation(navigation);
   }, [navigation]);
@@ -52,7 +55,7 @@ const GroceryList = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={DATA}
+        data={groceryItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       ></FlatList>

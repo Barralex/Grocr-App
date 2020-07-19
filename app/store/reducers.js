@@ -1,5 +1,7 @@
 import CONSTANTS from "./CONSTANTS";
 
+//Auth Reducer
+
 export const reducerSession = (state = null, action) => {
   switch (action.type) {
     case CONSTANTS.SET_SESSION:
@@ -13,10 +15,12 @@ export const reducerSession = (state = null, action) => {
   }
 };
 
-export const reducerGroceryItems = (state = null, action) => {
+//Grocery Reducer
+
+export const reducerGroceryItems = (state = [{}], action) => {
   switch (action.type) {
-    case CONSTANTS.ADD_ITEM_SUCCESS:
-      return true;
+    case CONSTANTS.UPDATE_GROCERY_LIST:
+      return action.data;
     default:
       return state;
   }

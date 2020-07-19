@@ -36,8 +36,8 @@ const AddGroceryItem = () => {
         onPress={() =>
           dispatch(
             actionSetItem({
-              name: text,
-              addByUser: user.email,
+              title: text,
+              owner: user.email,
               done: false,
             })
           )
