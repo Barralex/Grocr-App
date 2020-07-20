@@ -32,3 +32,12 @@ export const updateGroceryList = (values) => ({
   type: CONSTANTS.UPDATE_GROCERY_LIST,
   data: values,
 });
+
+export const getGroceryList = () => ({
+  type: CONSTANTS.GET_GROCERY_LIST,
+});
+
+export const deleteGroceryItem = (values) => ({
+  type: CONSTANTS.DELETE_GROCERY_LIST,
+  data: values,
+});

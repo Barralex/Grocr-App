@@ -15,3 +15,4 @@ firebase.initializeApp(firebaseConfig);
 
 export const authentication = firebase.auth();
 export const database = firebase.database();
+export const getServerTime = () => firebase.database.ServerValue.TIMESTAMP;

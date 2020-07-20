@@ -27,7 +27,7 @@ const AddGroceryItem = () => {
   return (
     <View style={styles.container}>
       <View style={styles.textInput}>
-        <Text>Type what you want to buy</Text>
+        <Text>Type what you want me to buy</Text>
         <TextInput onChangeText={(text) => setText(text)} />
         <View style={styles.line} />
       </View>
@@ -38,7 +38,7 @@ const AddGroceryItem = () => {
             actionSetItem({
               title: text,
               owner: user.email,
-              done: false,
+              completed: false,
             })
           )
         }

@@ -1,4 +1,5 @@
 import CONSTANTS from "./CONSTANTS";
+import { deleteGroceryItem } from "./ACTIONS";
 
 //Auth Reducer
 
@@ -17,10 +18,10 @@ export const reducerSession = (state = null, action) => {
 
 //Grocery Reducer
 
-export const reducerGroceryItems = (state = [{}], action) => {
+export const reducerGroceryItems = (state = [], action) => {
   switch (action.type) {
     case CONSTANTS.UPDATE_GROCERY_LIST:
-      return action.data;
+      return [...action.data];
     default:
       return state;
   }

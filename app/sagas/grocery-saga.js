@@ -1,4 +1,4 @@
-import { database } from "../services/firebase";
+import { database, getServerTime } from "../services/firebase";
 import {
   takeEvery,
   call,
@@ -16,12 +16,9 @@ function* setGroceryItemWatcher() {
 }
 
 const setGroceryItem = (values) => {
+  console.log("valies", { ...values });
   const ref = database.ref("grocery-items/" + values.title);
-  ref.set({
-    name: values.title,
-    owner: values.owner,
-    done: false,
-  });
+  ref.set({ ...values, time: getServerTime() });
 };
 
 function* setGroceryItemHandler(values) {
@@ -61,4 +58,25 @@ function* startListenerHandler() {
   }
 }
 
-export default [setGroceryItemWatcher, startListenerWatcher];
+const deleteGroceryItem = (values) => {
+  const ref = database.ref("grocery-items/" + values);
+  return ref.remove();
+};
+
+function* deleteGroceryItemHandler(values) {
+  try {
+    yield call(deleteGroceryItem, values.data);
+  } catch (error) {
+    console.log("deleteGroceryItemHandler error:", error);
+  }
+}
+
+function* deleteGroceryItemWatcher() {
+  yield takeEvery(CONSTANTS.DELETE_GROCERY_LIST, deleteGroceryItemHandler);
+}
+
+export default [
+  setGroceryItemWatcher,
+  startListenerWatcher,
+  deleteGroceryItemWatcher,
+];
