@@ -66,10 +66,10 @@ const GroceryList = ({ navigation }) => {
         )
       }
     >
-      <Text style={completed ? styles.title : styles.titleCompleted}>
+      <Text style={completed ? styles.titleCompleted : styles.title}>
         {title}
       </Text>
-      <Text style={completed ? styles.owner : styles.ownerCompleted}>
+      <Text style={completed ? styles.ownerCompleted : styles.owner}>
         {owner}
       </Text>
     </TouchableOpacity>
