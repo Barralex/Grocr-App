@@ -8,7 +8,12 @@ import {
 } from "react-native";
 import navigationService from "../../services/navigationService";
 import { useSelector, useDispatch } from "react-redux";
-import { getGroceryList, deleteGroceryItem } from "../../store/ACTIONS";
+import {
+  getGroceryList,
+  deleteGroceryItem,
+  actionSetItem,
+} from "../../store/ACTIONS";
+import { updateGroceryList } from "./../../store/ACTIONS";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +32,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#A9A9A9",
   },
+  ownerCompleted: {
+    fontSize: 12,
+    color: "#A9A9A9",
+    textDecorationLine: "line-through",
+  },
+  titleCompleted: {
+    fontSize: 16,
+    textDecorationLine: "line-through",
+  },
 });
 
 const GroceryList = ({ navigation }) => {
@@ -38,18 +52,33 @@ const GroceryList = ({ navigation }) => {
     dispatch(getGroceryList());
   }, [navigation]);
 
-  const Item = ({ title, owner }) => (
+  const Item = ({ title, owner, completed }) => (
     <TouchableOpacity
       style={styles.item}
       onLongPress={() => dispatch(deleteGroceryItem(title))}
+      onPress={() =>
+        dispatch(
+          actionSetItem({
+            title: title,
+            owner: owner,
+            completed: !completed,
+          })
+        )
+      }
     >
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.owner}>{owner}</Text>
+      <Text style={completed ? styles.title : styles.titleCompleted}>
+        {title}
+      </Text>
+      <Text style={completed ? styles.owner : styles.ownerCompleted}>
+        {owner}
+      </Text>
     </TouchableOpacity>
   );
 
   const renderItem = ({ item }) => {
-    return <Item title={item.title} owner={item.owner} />;
+    return (
+      <Item title={item.title} owner={item.owner} completed={item.completed} />
+    );
   };
 
   return (

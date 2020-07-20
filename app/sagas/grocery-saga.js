@@ -16,7 +16,6 @@ function* setGroceryItemWatcher() {
 }
 
 const setGroceryItem = (values) => {
-  console.log("valies", { ...values });
   const ref = database.ref("grocery-items/" + values.title);
   ref.set({ ...values, time: getServerTime() });
 };
