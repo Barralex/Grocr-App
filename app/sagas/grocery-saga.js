@@ -36,15 +36,18 @@ function* startListenerWatcher() {
 
 function* startListenerHandler() {
   const channel = new eventChannel((emiter) => {
-    const listener = database.ref("grocery-items").on("value", (snapshot) => {
-      const groceries = [];
-      snapshot.forEach((snap) => {
-        let item = snap.val();
-        item.id = snap.key;
-        groceries.push(item);
+    const listener = database
+      .ref("grocery-items")
+      .orderByChild("completed")
+      .on("value", (snapshot) => {
+        const groceries = [];
+        snapshot.forEach((snap) => {
+          let item = snap.val();
+          item.id = snap.key;
+          groceries.push(item);
+        });
+        emiter({ data: groceries || {} });
       });
-      emiter({ data: groceries || {} });
-    });
 
     return () => {
       listener.off();

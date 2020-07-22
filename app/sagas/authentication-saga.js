@@ -14,6 +14,14 @@ const userDatabasaRegister = ({ uid, email, name }) =>
     email,
   });
 
+function* setOnlineUser({ uid, email }) {
+  const onlineRef = database.ref(`online/${uid}`);
+
+  onlineRef.set({
+    email: email,
+  });
+}
+
 function* userRegisterHandler(values) {
   try {
     const register = yield call(firebaseRegister, values.data);
@@ -35,7 +43,8 @@ const firebaseLogin = ({ email, password }) =>
 function* userLoginHandler(values) {
   try {
     const result = yield call(firebaseLogin, values.data);
-    console.log("sign in success:", result);
+    yield call(setOnlineUser, result.user);
+    console.log("result", result);
   } catch (error) {
     Alert.alert("Login Failed", "Invalid credentials");
   }
