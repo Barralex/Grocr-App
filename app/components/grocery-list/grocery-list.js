@@ -13,7 +13,6 @@ import {
   deleteGroceryItem,
   actionSetItem,
 } from "../../store/ACTIONS";
-import { updateGroceryList } from "./../../store/ACTIONS";
 
 const styles = StyleSheet.create({
   container: {

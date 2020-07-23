@@ -14,12 +14,14 @@ const userDatabasaRegister = ({ uid, email, name }) =>
     email,
   });
 
-function* setOnlineUser({ uid, email }) {
-  const onlineRef = database.ref(`online/${uid}`);
+function* onlinenHandler({ data }) {
+  const onlineRef = database.ref(`online/${data.uid}`);
 
   onlineRef.set({
-    email: email,
+    email: data.email,
   });
+
+  onlineRef.onDisconnect().remove();
 }
 
 function* userRegisterHandler(values) {
@@ -42,20 +44,20 @@ const firebaseLogin = ({ email, password }) =>
 
 function* userLoginHandler(values) {
   try {
-    const result = yield call(firebaseLogin, values.data);
-    yield call(setOnlineUser, result.user);
-    console.log("result", result);
+    yield call(firebaseLogin, values.data);
   } catch (error) {
     Alert.alert("Login Failed", "Invalid credentials");
   }
 }
 
-function* userLogoutHandler() {
+function* userLogoutHandler({ data }) {
+  console.log(data);
   try {
     yield call(authentication.signOut());
+    yield call(database.ref(`online/${data.uid}`).remove());
     console.log("sign out success");
-  } catch {
-    console.log("sign out failed");
+  } catch (error) {
+    console.log("sign out failed", error);
   }
 }
 
@@ -71,4 +73,13 @@ function* userLoginWatcher() {
   yield takeEvery(CONSTANTS.LOGIN, userLoginHandler);
 }
 
-export default [userRegisterWatcher, userLoginWatcher, userLogoutWatcher];
+function* onlinenWatcher() {
+  yield takeEvery(CONSTANTS.ONLINE, onlinenHandler);
+}
+
+export default [
+  userRegisterWatcher,
+  userLoginWatcher,
+  userLogoutWatcher,
+  onlinenWatcher,
+];

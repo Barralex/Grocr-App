@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import AuthComponents from "./../authenticate/auth-components";
 import Main from "./main";
-import { authentication } from "./../../services/firebase";
-import { actionSetSession, actionCloseSession } from "./../../store/ACTIONS";
+import { authentication, database } from "./../../services/firebase";
+import {
+  actionSetSession,
+  actionCloseSession,
+  setOnlineUser,
+} from "./../../store/ACTIONS";
 import { connect } from "react-redux";
 
 const styles = StyleSheet.create({
@@ -21,6 +25,7 @@ const mapDispachToPros = (dispatch) => ({
     authentication.onAuthStateChanged((user) => {
       if (user) {
         dispatch(actionSetSession(user));
+        dispatch(setOnlineUser(user));
       } else {
         dispatch(actionCloseSession());
       }

@@ -10,8 +10,9 @@ export const actionLogin = (values) => ({
   data: values,
 });
 
-export const actionLogout = () => ({
+export const actionLogout = (values) => ({
   type: CONSTANTS.LOGOUT,
+  data: values,
 });
 
 export const actionSetSession = (user) => ({
@@ -39,5 +40,10 @@ export const getGroceryList = () => ({
 
 export const deleteGroceryItem = (values) => ({
   type: CONSTANTS.DELETE_GROCERY_LIST,
+  data: values,
+});
+
+export const setOnlineUser = (values) => ({
+  type: CONSTANTS.ONLINE,
   data: values,
 });

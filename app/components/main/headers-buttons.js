@@ -34,9 +34,11 @@ export const navigateToAddItem = (navigation) => {
   );
 };
 
-export const SignOutButton = (logout) => {
+export const SignOutButton = (logout, user) => {
   return () => (
-    <TouchableOpacity onPress={() => logout()}>
+    <TouchableOpacity
+      onPress={() => logout({ uid: user.uid, email: user.email })}
+    >
       <Text> Sign Out </Text>
     </TouchableOpacity>
   );

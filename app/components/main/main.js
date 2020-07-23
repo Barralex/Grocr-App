@@ -40,7 +40,7 @@ class Main extends Component {
             options={{
               title: "Online",
               headerTitleAlign: "center",
-              headerRight: SignOutButton(this.props.logout),
+              headerRight: SignOutButton(this.props.logout, this.props.user),
             }}
           />
           <Stack.Screen
@@ -58,12 +58,12 @@ class Main extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  user: state.reducerSession,
 });
 
 const mapDispachToPros = (dispatch) => ({
-  logout: () => {
-    dispatch(actionLogout());
+  logout: (values) => {
+    dispatch(actionLogout(values));
   },
   setItem: (values) => {
     dispatch(actionSetItem(values));
