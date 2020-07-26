@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 
 const OnlineUsers = () => {
   const onlineUsers = useSelector((state) => state.onlineUsers);
-  console.log(onlineUsers);
+
   const Item = ({ title }) => (
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>
