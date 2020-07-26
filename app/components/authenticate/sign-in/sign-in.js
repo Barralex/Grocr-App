@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import SignInForm from "./sign-in-form";
-import { actionLogin } from "../../../store/ACTIONS";
+import {
+  actionLogin,
+  startLoading,
+  finishLoading,
+} from "../../../store/ACTIONS";
 import { connect } from "react-redux";
 
 const styles = StyleSheet.create({

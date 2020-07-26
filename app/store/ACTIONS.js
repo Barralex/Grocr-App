@@ -52,3 +52,11 @@ export const setOnlineUsersCounter = (values) => ({
   type: CONSTANTS.ONLINE_COUNTER,
   data: values,
 });
+
+export const startLoading = () => ({
+  type: CONSTANTS.START_LOADING,
+});
+
+export const finishLoading = () => ({
+  type: CONSTANTS.FINISH_LOADING,
+});

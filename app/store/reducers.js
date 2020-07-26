@@ -29,3 +29,14 @@ export const reducerGroceryItems = (state = [], action) => {
       return state;
   }
 };
+
+export const reducerLoading = (state = false, action) => {
+  switch (action.type) {
+    case CONSTANTS.START_LOADING:
+      return true;
+    case CONSTANTS.FINISH_LOADING:
+      return false;
+    default:
+      return state;
+  }
+};

@@ -3,18 +3,23 @@ import { authentication, database } from "../services/firebase";
 import CONSTANTS from "../store/CONSTANTS";
 import { Alert } from "react-native";
 import { eventChannel } from "redux-saga";
-import { setOnlineUsersCounter } from "./../store/ACTIONS";
+import {
+  setOnlineUsersCounter,
+  finishLoading,
+  startLoading,
+} from "./../store/ACTIONS";
 
 const firebaseRegister = (values) =>
   authentication
     .createUserWithEmailAndPassword(values.email, values.password)
     .then((success) => success);
 
-const userDatabasaRegister = ({ uid, email, name }) =>
-  database.ref(`users/${uid}`).set({
+const userDatabasaRegister = ({ uid, email, name }) => {
+  return database.ref(`users/${uid}`).set({
     username: name,
     email,
   });
+};
 
 function* onlinenHandler({ data }) {
   const onlineRef = database.ref(`online/${data.uid}`);
@@ -28,6 +33,7 @@ function* onlinenHandler({ data }) {
 
 function* userRegisterHandler(values) {
   try {
+    yield put(startLoading());
     const register = yield call(firebaseRegister, values.data);
     const { email, uid } = register.user;
     const {
@@ -35,7 +41,9 @@ function* userRegisterHandler(values) {
     } = values;
     yield call(userDatabasaRegister, { uid, email, name });
   } catch (error) {
-    console.log(error);
+    Alert.alert("Signup Failed", "Error creating your account");
+  } finally {
+    yield put(finishLoading());
   }
 }
 
@@ -46,9 +54,12 @@ const firebaseLogin = ({ email, password }) =>
 
 function* userLoginHandler(values) {
   try {
+    yield put(startLoading());
     yield call(firebaseLogin, values.data);
   } catch (error) {
     Alert.alert("Login Failed", "Invalid credentials");
+  } finally {
+    yield put(finishLoading());
   }
 }
 

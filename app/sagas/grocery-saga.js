@@ -9,7 +9,11 @@ import {
 } from "redux-saga/effects";
 import CONSTANTS from "../store/CONSTANTS";
 import { eventChannel } from "redux-saga";
-import { updateGroceryList } from "./../store/ACTIONS";
+import {
+  updateGroceryList,
+  finishLoading,
+  startLoading,
+} from "./../store/ACTIONS";
 
 function* setGroceryItemWatcher() {
   yield takeEvery(CONSTANTS.SET_ITEM, setGroceryItemHandler);
