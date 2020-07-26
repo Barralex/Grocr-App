@@ -47,3 +47,8 @@ export const setOnlineUser = (values) => ({
   type: CONSTANTS.ONLINE,
   data: values,
 });
+
+export const setOnlineUsersCounter = (values) => ({
+  type: CONSTANTS.ONLINE_COUNTER,
+  data: values,
+});

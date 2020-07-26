@@ -1,7 +1,9 @@
-import { takeEvery, call } from "redux-saga/effects";
+import { takeEvery, call, take, put, fork } from "redux-saga/effects";
 import { authentication, database } from "../services/firebase";
 import CONSTANTS from "../store/CONSTANTS";
 import { Alert } from "react-native";
+import { eventChannel } from "redux-saga";
+import { setOnlineUsersCounter } from "./../store/ACTIONS";
 
 const firebaseRegister = (values) =>
   authentication
@@ -51,11 +53,10 @@ function* userLoginHandler(values) {
 }
 
 function* userLogoutHandler({ data }) {
-  console.log(data);
   try {
-    yield call(authentication.signOut());
-    yield call(database.ref(`online/${data.uid}`).remove());
-    console.log("sign out success");
+    yield call([authentication, authentication.signOut]);
+    const ref = database.ref(`online/${data.uid}`);
+    yield call([ref, ref.remove]);
   } catch (error) {
     console.log("sign out failed", error);
   }
@@ -77,9 +78,55 @@ function* onlinenWatcher() {
   yield takeEvery(CONSTANTS.ONLINE, onlinenHandler);
 }
 
+function* startUserCountListener() {
+  const channel = new eventChannel((emiter) => {
+    const listener = database.ref("online").on("value", (snapshot) => {
+      const users = [];
+
+      snapshot.forEach((snap) => {
+        users.push({ ...snap.val(), id: snap.key });
+      });
+
+      emiter({ data: users });
+    });
+
+    return () => listener.off();
+  });
+
+  while (true) {
+    const { data } = yield take(channel);
+    yield put(setOnlineUsersCounter(data));
+  }
+}
+
+function* startUserCountListenerWatcher() {
+  yield fork(startUserCountListener);
+}
+
+function* getOnlineUserListHandler() {
+  const ref = database.ref("online");
+
+  const callback = (snapshot) => {
+    const users = [];
+    snapshot.forEach((snap) => {
+      users.push({ ...snap.val(), id: snap.key });
+    });
+  };
+
+  const users = yield call([ref, ref.once], "value", callback);
+
+  yield put(setOnlineUsersCounter(users));
+}
+
+function* onlineUserListWatcher() {
+  yield takeEvery(CONSTANTS.ONLINE_USERS_LIST, getOnlineUserListHandler);
+}
+
 export default [
   userRegisterWatcher,
   userLoginWatcher,
   userLogoutWatcher,
   onlinenWatcher,
+  startUserCountListenerWatcher,
+  onlineUserListWatcher,
 ];

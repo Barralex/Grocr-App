@@ -30,7 +30,10 @@ class Main extends Component {
             options={({ navigation }) => ({
               title: "Grocery List",
               headerTitleAlign: "center",
-              headerLeft: OnlineUsersButton(navigation, 1),
+              headerLeft: OnlineUsersButton(
+                navigation,
+                this.props.onlineUsers ? this.props.onlineUsers.length : 0
+              ),
               headerRight: navigateToAddItem(navigation),
             })}
           />
@@ -59,6 +62,7 @@ class Main extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.reducerSession,
+  onlineUsers: state.onlineUsers,
 });
 
 const mapDispachToPros = (dispatch) => ({
