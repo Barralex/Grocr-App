@@ -19,7 +19,7 @@ React Native and [Firebase](https://www.firebase.com/) collaborative grocery lis
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License
 
 ## Extras
-based on [Ray Wenderlich](https://www.raywenderlich.com/3-firebase-tutorial-getting-started) firebase with IOS tutorial. Thanks to him to give us such a nice tutorial to learn something new.
+based on [Ray Wenderlich](https://www.raywenderlich.com/3-firebase-tutorial-getting-started) firebase with IOS tutorial. Thanks to him to give us such a nice post about it. 
