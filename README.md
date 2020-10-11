@@ -1,7 +1,7 @@
 # Grocr-App 
 React Native and [Firebase](https://www.firebase.com/) collaborative grocery list app. Real time events into react native using firebase SDK.
 
-![Grocr-App ](src/assets/animated-login-screen.gif)
+![Grocr-App ](src/assets/grocr-app.gif)
 
 ## Getting Started
 
