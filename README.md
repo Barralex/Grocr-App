@@ -13,6 +13,10 @@ React Native and [Firebase](https://www.firebase.com/) collaborative grocery lis
 * [Firebase](https://reactnative.dev/) - Backend-as-a-Service Plataform
 * [Firebase real time database](https://firebase.google.com/docs/database) - NoSQL cloud database.
 
+## Try it with Expo
+
+[Expo Project](https://expo.io/@barralex/projects/Grocr-App)
+
 ## Authors
 
 * **Luis Barral** - [Barralex](https://github.com/Barralex)
